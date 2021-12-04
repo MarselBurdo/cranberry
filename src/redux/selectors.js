@@ -1,0 +1,1 @@
+export const getGoodsToTable =(state) => state.goods
