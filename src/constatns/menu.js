@@ -18,8 +18,8 @@ export const menu = [
     roles: [""],
   },
   {
-    path: "/logout",
-    textLink: "Logout",
+    path: "/registration",
+    textLink: "Registration",
     exact: false,
     roles: [""],
   },
