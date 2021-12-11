@@ -11,6 +11,10 @@ import Registration from "../Registration/Registration";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserName } from "../../redux/selectors";
 import { logout } from "../../redux/actions";
+import Dialog from "../Dialog/Dialog";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import PublicRoute from "../PublicRoute/PublicRoute";
+import FunPage from "../FunPage/FunPage";
 
 const { Header, Footer, Sider, Content } = AntLayout;
 
@@ -34,17 +38,61 @@ export default function Layout({ children }) {
           <>
             <Routes>
               <Route path="/" exact element={<Home />} />
+              <Route
+                path="/goods"
+                element={
+                  <PrivateRoute>
+                    <Goods />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/dialog"
+                element={
+                  <PrivateRoute>
+                    <Dialog />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/goods/add"
+                element={
+                  <PrivateRoute>
+                    <AddForm />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/fun"
+                element={
+                  <PrivateRoute>
+                    <FunPage />
+                  </PrivateRoute>
+                }
+              />
 
-              <Route path="/goods" element={<Goods />} />
-              <Route path="/goods/add" element={<AddForm />} />
-              {!user && (
-                <>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/registration" element={<Registration />} />
-                </>
-              )}
+              {/* <PrivateRoute path="/goods">
+                <Goods />
+              </PrivateRoute> */}
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/registration"
+                element={
+                  <PublicRoute>
+                    <Registration />
+                  </PublicRoute>
+                }
+              />
 
               <Route path="/logout">logout</Route>
+              <Route path="*" element={<>No page 404 error</>} />
             </Routes>
           </>
         </Content>

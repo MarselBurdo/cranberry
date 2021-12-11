@@ -6,7 +6,8 @@ export const network = {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify(data),
+        // body: JSON.stringify(data),
+        ...(method === "GET" ? {} : { body: JSON.stringify(data) }),
       });
       const result = await response.json();
       return result;
@@ -17,5 +18,9 @@ export const network = {
   },
   post({ url, data }) {
     return this.request({ method: "POST", url, data });
+  },
+
+  get({ url }) {
+    return this.request({ method: "GET", url });
   },
 };

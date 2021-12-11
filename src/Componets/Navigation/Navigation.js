@@ -10,20 +10,32 @@ export default function Navigation() {
   return (
     <>
       <Menu>
-        {user &&
-          menu.map((el) => (
-            <Menu.Item key={el.path}>
-              <NavLink to={el.path}>{el.textLink}</NavLink>
-            </Menu.Item>
-          ))}
-        {!user &&
-          menu
-            .filter((el) => el.path !== "/login" || el.path !== "registration")
-            .map((el) => (
+        {menu.map((el) => {
+          if (user && el.roles.includes("collaborator")) {
+            return (
               <Menu.Item key={el.path}>
                 <NavLink to={el.path}>{el.textLink}</NavLink>
               </Menu.Item>
-            ))}
+            );
+          } else if (!user && el.roles.includes("all")) {
+            return (
+              <Menu.Item key={el.path}>
+                <NavLink to={el.path}>{el.textLink}</NavLink>
+              </Menu.Item>
+            );
+          }
+          return null;
+        })}
+
+        {/**
+         * Default simple menu
+         */}
+
+        {/* {menu.map((el) => (
+          {user && ( <Menu.Item key={el.path}>
+            <NavLink to={el.path}>{el.textLink}</NavLink>
+          </Menu.Item>)}
+        ))} */}
       </Menu>
     </>
   );

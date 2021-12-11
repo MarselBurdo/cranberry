@@ -8,11 +8,11 @@ import { getUserName } from "../../redux/selectors";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector(getUserName);
+  // const user = useSelector(getUserName);
 
-  useEffect(() => {
-    if (user) navigate("/");
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) navigate("/");
+  // }, [user]);
 
   const onFinish = (formData) => {
     dispatch(login(formData));

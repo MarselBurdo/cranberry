@@ -31,3 +31,10 @@ export const logout = createAsyncThunk("AUTH_LOGOUT", async () => {
 
   return regResult;
 });
+
+export const funAction = createAsyncThunk("FUN_CHARACTERS", async () => {
+  const funResult = await network.get({
+    url: "https://rickandmortyapi.com/api/character",
+  });
+  return funResult.results;
+});

@@ -2,9 +2,18 @@ const express = require("express");
 const cors = require("cors");
 const parser = require("body-parser");
 const faker = require("faker");
+const httpNew = require("http");
+const ioNew = require("socket.io");
 
 const app = express();
 const PORT = process.env.PORT || 4444;
+
+const http = httpNew.createServer(app);
+
+//create init socket value
+const io = ioNew(http, {
+  transports: ["websocket", "polling"],
+});
 
 app.use(cors());
 
@@ -53,6 +62,36 @@ app.post("/logout", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+// default socket connection
+const users = {};
+io.on("connection", (client) => {
+  client.on("username", (username) => {
+    console.log("connect");
+    const user = {
+      name: username,
+      id: client.id,
+    };
+    users[client.id] = user;
+    io.emit("connected", user);
+    io.emit("users", Object.values(users));
+  });
+
+  client.on("send", (message) => {
+    console.log(message);
+    io.emit("message", {
+      text: message,
+      date: new Date().toISOString(),
+      user: users[client.id],
+    });
+  });
+
+  client.on("disconnect", () => {
+    const username = users[client.id];
+    delete users[client.id];
+    io.emit("disconnected", client.id);
+  });
+});
+
+http.listen(PORT, () => {
   console.log(`His alive in ${PORT}`);
 });

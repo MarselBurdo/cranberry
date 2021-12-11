@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { registration } from "../../redux/actions";
-import { getUserName } from "../../redux/selectors";
+// import { getUserName } from "../../redux/selectors";
 
 const initialState = {
   login: "",
@@ -12,13 +12,13 @@ const initialState = {
 
 export default function Registration() {
   const [formData, setFormData] = useState(initialState);
-  const user = useSelector(getUserName);
+  // const user = useSelector(getUserName);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) navigate("/");
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) navigate("/");
+  // }, [user]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
